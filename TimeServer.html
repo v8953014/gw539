@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body onload="ajax()"><!--加载页面时执行ajax()-->
+    <p id="timeShow"></p>
+
+    <script>
+        //获取服务器时间
+        ajax()
+          function ajax(option){
+            var xhr = null;
+            if(window.XMLHttpRequest){
+              xhr = new window.XMLHttpRequest();
+            }else{ // ie
+              xhr = new ActiveObject("Microsoft");
+            }
+            // 通过post的方式请求当前文件,如果使用get的方式，会导致ie下只提交一次，导致时间变为1970
+            xhr.open("post","/");
+            xhr.send(null);
+            // 监听请求状态变化
+            xhr.onreadystatechange = function(){
+              var time=null, curDate=null; 
+              if(xhr.readyState===2){
+                // 获取响应头里的时间戳
+                time = xhr.getResponseHeader("Date");
+                console.log(xhr.getAllResponseHeaders())
+                curDate = new Date(time);
+
+                //p标签的显示内容
+                document.getElementById("timeShow").innerHTML = "服务器时间是："+curDate.getFullYear()+"-"+(curDate.getMonth()+1)+"-"+curDate.getDate()+" "+curDate.getHours()+":"+curDate.getMinutes()+":"+curDate.getSeconds();
+
+                setTimeout(function(){ajax()},1000); //计时器
+                //setTimeout(ajax(),1000); //这种写法可能不兼容低版本ie浏览器
+              }
+            }
+          }  
+    </script>
+</body>
+</html>
