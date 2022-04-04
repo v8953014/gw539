@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
 </head>
-<body onload="ajax()"><!--加载页面时执行ajax()-->
+<body onload="ajax()"><!--加載頁面時執行ajax()-->
     <p id="timeShow"></p>
 
     <script>
-        //获取服务器时间
+        //獲取服務器時間
         ajax()
           function ajax(option){
             var xhr = null;
@@ -17,26 +17,29 @@
             }else{ // ie
               xhr = new ActiveObject("Microsoft");
             }
-            // 通过post的方式请求当前文件,如果使用get的方式，会导致ie下只提交一次，导致时间变为1970
+            // 通過post的方式請求當前文件,如果使用get的方式，會導致ie下只提交一次，導致時間變為1970
             xhr.open("post","/");
             xhr.send(null);
-            // 监听请求状态变化
+            // 監聽請求狀態變化
             xhr.onreadystatechange = function(){
               var time=null, curDate=null; 
               if(xhr.readyState===2){
-                // 获取响应头里的时间戳
+                // 獲取響應頭里的時間戳
                 time = xhr.getResponseHeader("Date");
                 console.log(xhr.getAllResponseHeaders())
                 curDate = new Date(time);
 
-                //p标签的显示内容
+                //p標籤的顯示內容
                 document.getElementById("timeShow").innerHTML = curDate[Symbol.toPrimitive]('number')/1000;
 
-                setTimeout(function(){ajax()},1000); //计时器
-                //setTimeout(ajax(),1000); //这种写法可能不兼容低版本ie浏览器
+                setTimeout(function(){ajax()},1000); //計時器
+                //setTimeout(ajax(),1000); //這種寫法可能不兼容低版本ie瀏覽器
               }
             }
           }  
     </script>
 </body>
-</html>
+</html> 
+<!DOCTYPE html>
+<html>
+<head>
